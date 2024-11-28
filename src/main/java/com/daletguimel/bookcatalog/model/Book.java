@@ -74,6 +74,7 @@ public class Book {
         List<AuthorRecord> authorRecords = auhtors.stream()
                 .map(Author::toRecord)
                 .toList();
+        return new BookRecord(title, authorRecords, languages, copyright, downloadCount);
     }
 
     public static Book fromRecord(BookRecord record) {

@@ -2,6 +2,7 @@ package com.daletguimel.bookcatalog.main;
 
 import com.daletguimel.bookcatalog.model.Book;
 import com.daletguimel.bookcatalog.model.BookRecord;
+import com.daletguimel.bookcatalog.model.BookResponse;
 import com.daletguimel.bookcatalog.service.ClientApi;
 import com.daletguimel.bookcatalog.service.DataConverter;
 
@@ -44,12 +45,11 @@ public class Main {
         try {
             String jsonResponse = clientApi.getBooks("?search=" +
                     query.replace(" ", "%20"));
-            List<BookRecord> books =
-                    List.of(dataConverter.fromJson(jsonResponse, BookRecord[].class));
-            books.forEach(book -> {
-                Book bookObj = Book.fromRecord(book);
-                System.out.println(bookObj);
-            });
+            BookResponse bookResponse = dataConverter.fromJson(jsonResponse, BookResponse.class);
+            List<Book> books = bookResponse.getResults().stream()
+                    .map(Book::fromRecord)
+                    .toList();
+            books.forEach(System.out::println);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error en la búsqueda: " + e.getMessage());
         }
@@ -64,12 +64,11 @@ public class Main {
         try {
             String jsonRespose = clientApi.getBooks("?author_year_start=" + yearStart +
                     "&author_year_end=" + yearEnd);
-            List<BookRecord> books =
-                    List.of(dataConverter.fromJson(jsonRespose, BookRecord[].class));
-            books.forEach(book -> {
-                Book bookObj = Book.fromRecord(book);
-                System.out.println(bookObj);
-            });
+            BookResponse bookResponse = dataConverter.fromJson(jsonRespose, BookResponse.class);
+            List<Book> books = bookResponse.getResults().stream()
+                    .map(Book::fromRecord)
+                    .toList();
+            books.forEach(System.out::println);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error en la búsqueda: " + e.getMessage());
         }

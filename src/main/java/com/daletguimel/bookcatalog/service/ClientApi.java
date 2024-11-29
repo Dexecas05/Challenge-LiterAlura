@@ -10,11 +10,13 @@ public class ClientApi {
     private final HttpClient client;
 
     public ClientApi() {
-        this.client = HttpClient.newHttpClient();
+        this.client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
     }
 
     public String getBooks(String query) throws IOException, InterruptedException{
-        String url = "https://gutendex.com/books" + query;
+        String url = "https://gutendex.com/books/" + query;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();

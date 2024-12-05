@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +19,11 @@ public class BookService {
     private BookRepository bookRepository;
 
     public void saveBook(Book book) {
+        Optional<BookEntity> existingBook = bookRepository.findByTitle(book.getTitle());
+        if (existingBook.isPresent()) {
+            System.out.println("El libro ya existe en la base de datos.");
+            return;
+        }
         BookEntity bookEntity = convertToBookEntity(book);
         bookRepository.save(bookEntity);
     }

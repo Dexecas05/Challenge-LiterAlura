@@ -2,6 +2,8 @@ package com.daletguimel.bookcatalog.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "authors")
 public class AuthorEntity {
@@ -13,6 +15,9 @@ public class AuthorEntity {
     private String name;
     private Integer birthYear;
     private Integer deathYear;
+
+    @ManyToMany(mappedBy = "authors")
+    private List<BookEntity> books;
 
     public Long getId() {
         return id;

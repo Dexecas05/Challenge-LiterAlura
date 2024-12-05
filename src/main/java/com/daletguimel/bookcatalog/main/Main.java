@@ -1,23 +1,33 @@
 package com.daletguimel.bookcatalog.main;
 
-import com.daletguimel.bookcatalog.model.Author;
-import com.daletguimel.bookcatalog.model.Book;
-import com.daletguimel.bookcatalog.model.BookRecord;
-import com.daletguimel.bookcatalog.model.BookResponse;
+import com.daletguimel.bookcatalog.model.*;
+import com.daletguimel.bookcatalog.service.BookService;
 import com.daletguimel.bookcatalog.service.ClientApi;
 import com.daletguimel.bookcatalog.service.DataConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class Main {
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private ClientApi clientApi;
+
+    @Autowired
+    private DataConverter dataConverter;
+
     Scanner scanner = new Scanner(System.in);
-    ClientApi clientApi = new ClientApi();
-    DataConverter dataConverter = new DataConverter();
-    List<Book> librosConsultados = new ArrayList<>();
-    List<Author> autoresConsultados = new ArrayList<>();
+
+//    List<Book> librosConsultados = new ArrayList<>();
+//    List<Author> autoresConsultados = new ArrayList<>();
 
     public void menuDeOpciones() {
         var opcion = -1;
@@ -63,8 +73,7 @@ public class Main {
             if (!bookResponse.getResults().isEmpty()){
                 Book book = Book.fromRecord(bookResponse.getResults().get(0));
                 System.out.println(book);
-                agregarLibroConsultado(book);
-                agregarAutoresConsultados(book.getAuhtors());
+                bookService.saveBook(book);
             } else {
                 System.out.println("No se encontraron resultados para la búsqueda");
             }
@@ -87,26 +96,16 @@ public class Main {
                     .map(Book::fromRecord)
                     .toList();
             books.forEach(System.out::println);
-            books.forEach(this::agregarLibroConsultado);
-            books.forEach(book -> agregarAutoresConsultados(book.getAuhtors()));
+            books.forEach(bookService::saveBook);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error en la búsqueda: " + e.getMessage());
         }
     }
 
-    // Metodos para agregar objetos a las listas
-
-    private void agregarLibroConsultado(Book book) {
-        librosConsultados.add(book);
-    }
-
-    private void agregarAutoresConsultados(List<Author> authors) {
-        autoresConsultados.addAll(authors);
-    }
-
     //Metodos para mostrar listas
 
     private void listarTodosLosLibros() {
+        List<BookEntity> librosConsultados = bookService.getAllBooks();
         if (librosConsultados.isEmpty()) {
             System.out.println("No hay libros para mostrar aún.");
         } else {
@@ -117,9 +116,7 @@ public class Main {
     private void listarLibrosPorIdioma() {
         System.out.println("Ingrese el código de dos letras del idioma ('en', 'es', 'fr', etc): ");
         String idioma = scanner.nextLine();
-        List<Book> librosPorIdioma = librosConsultados.stream()
-                .filter(book -> book.getLanguages().contains(idioma))
-                .toList();
+        List<BookEntity> librosPorIdioma = bookService.getBooksByLanguage(idioma);
         if (librosPorIdioma.isEmpty()) {
             System.out.println("No hay libros para mostrar aún.");
         } else {
@@ -128,25 +125,25 @@ public class Main {
     }
 
     private void listarTodosLosAutores(){
-        if (autoresConsultados.isEmpty()) {
-            System.out.println("No hay autores para mostrar aún.");
-        } else {
-            autoresConsultados.forEach(System.out::println);
-        }
+//        if (autoresConsultados.isEmpty()) {
+//            System.out.println("No hay autores para mostrar aún.");
+//        } else {
+//            autoresConsultados.forEach(System.out::println);
+//        }
     }
 
     private void listarAutoresVivos() {
-        System.out.println("Ingrese el año en el cual desea consultar autores vivos: ");
-        int year = scanner.nextInt();
-        scanner.nextLine();
-        List<Author> autoresVivos = autoresConsultados.stream()
-                .filter(author -> (author.getBirthYear() != null && author.getBirthYear() <= year) &&
-                        (author.getDeathYear() == null || author.getDeathYear() >= year))
-                .toList();
-        if (autoresVivos.isEmpty()) {
-            System.out.println("No se encontaron autores vivos para el año consultado.");
-        } else {
-            autoresVivos.forEach(System.out::println);
-        }
+//        System.out.println("Ingrese el año en el cual desea consultar autores vivos: ");
+//        int year = scanner.nextInt();
+//        scanner.nextLine();
+//        List<Author> autoresVivos = autoresConsultados.stream()
+//                .filter(author -> (author.getBirthYear() != null && author.getBirthYear() <= year) &&
+//                        (author.getDeathYear() == null || author.getDeathYear() >= year))
+//                .toList();
+//        if (autoresVivos.isEmpty()) {
+//            System.out.println("No se encontaron autores vivos para el año consultado.");
+//        } else {
+//            autoresVivos.forEach(System.out::println);
+//        }
     }
 }

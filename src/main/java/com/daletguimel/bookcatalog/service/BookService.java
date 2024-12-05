@@ -38,7 +38,7 @@ public class BookService {
     private AuthorEntity convertToAuthorEntity(Author author) {
         AuthorEntity authorEntity = new AuthorEntity();
         authorEntity.setName(author.getName());
-        authorEntity.setBirthYear(authorEntity.getBirthYear());
+        authorEntity.setBirthYear(author.getBirthYear());
         authorEntity.setDeathYear(author.getDeathYear());
         return authorEntity;
     }

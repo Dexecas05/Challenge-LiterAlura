@@ -27,7 +27,6 @@ public class Main {
     Scanner scanner = new Scanner(System.in);
 
 //    List<Book> librosConsultados = new ArrayList<>();
-//    List<Author> autoresConsultados = new ArrayList<>();
 
     public void menuDeOpciones() {
         var opcion = -1;
@@ -39,6 +38,7 @@ public class Main {
                     4. Listar los libros consultados por idioma
                     5. Listar todos los autores consultados
                     6. Listar autores vivos en un año determinado
+                    7. Mostrar estadística de libros por idioma
                     
                     0. Salir
                     """;
@@ -54,6 +54,7 @@ public class Main {
                 case 4 -> listarLibrosPorIdioma();
                 case 5 -> listarTodosLosAutores();
                 case 6 -> listarAutoresVivos();
+                case 7 -> mostrarEstadisticasPorIdioma();
                 case 0 -> System.out.println("Saliendo. ¡Que tenga un buen día!");
                 default -> System.out.println("Opción no válida. Intente nuevamente, por favor");
             }
@@ -125,25 +126,30 @@ public class Main {
     }
 
     private void listarTodosLosAutores(){
-//        if (autoresConsultados.isEmpty()) {
-//            System.out.println("No hay autores para mostrar aún.");
-//        } else {
-//            autoresConsultados.forEach(System.out::println);
-//        }
+        List<AuthorEntity> autoresConsultados = bookService.getAllAuthors();
+        if (autoresConsultados.isEmpty()) {
+            System.out.println("No hay autores para mostrar aún.");
+        } else {
+            autoresConsultados.forEach(System.out::println);
+        }
     }
 
     private void listarAutoresVivos() {
-//        System.out.println("Ingrese el año en el cual desea consultar autores vivos: ");
-//        int year = scanner.nextInt();
-//        scanner.nextLine();
-//        List<Author> autoresVivos = autoresConsultados.stream()
-//                .filter(author -> (author.getBirthYear() != null && author.getBirthYear() <= year) &&
-//                        (author.getDeathYear() == null || author.getDeathYear() >= year))
-//                .toList();
-//        if (autoresVivos.isEmpty()) {
-//            System.out.println("No se encontaron autores vivos para el año consultado.");
-//        } else {
-//            autoresVivos.forEach(System.out::println);
-//        }
+        System.out.println("Ingrese el año en el cual desea consultar autores vivos: ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+
+        List<AuthorEntity> autoresVivos = bookService.getAuthorsAliveInYear(year);
+        if (autoresVivos.isEmpty()) {
+            System.out.println("No se encontaron autores vivos para el año consultado.");
+        } else {
+            autoresVivos.forEach(System.out::println);
+        }
+    }
+
+    private void mostrarEstadisticasPorIdioma(){
+        System.out.println("Cantidad de libros por idioma: ");
+        System.out.println("\nLibros en inglés (en): " + bookService.countBooksByLanguage("en"));
+        System.out.println("\nLibros en español (es): " + bookService.countBooksByLanguage("es"));
     }
 }

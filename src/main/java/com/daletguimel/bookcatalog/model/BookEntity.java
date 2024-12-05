@@ -17,7 +17,7 @@ public class BookEntity {
     private Boolean copyright;
     private int downloadCount;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_authors",
             joinColumns = @JoinColumn(name = "book_id"),

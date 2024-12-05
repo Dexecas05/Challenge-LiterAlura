@@ -4,6 +4,7 @@ import com.daletguimel.bookcatalog.model.Author;
 import com.daletguimel.bookcatalog.model.AuthorEntity;
 import com.daletguimel.bookcatalog.model.Book;
 import com.daletguimel.bookcatalog.model.BookEntity;
+import com.daletguimel.bookcatalog.repository.AuthorRepository;
 import com.daletguimel.bookcatalog.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
     public void saveBook(Book book) {
         Optional<BookEntity> existingBook = bookRepository.findByTitle(book.getTitle());
@@ -55,5 +59,17 @@ public class BookService {
 
     public List<BookEntity> getBooksByLanguage(String language) {
         return bookRepository.findByLanguage(language);
+    }
+
+    public long countBooksByLanguage(String language){
+        return bookRepository.countByLanguage(language);
+    }
+
+    public List<AuthorEntity> getAllAuthors(){
+        return authorRepository.findAll();
+    }
+
+    public List<AuthorEntity> getAuthorsAliveInYear(int year){
+        return authorRepository.findAuthorsAliveInYear(year);
     }
 }

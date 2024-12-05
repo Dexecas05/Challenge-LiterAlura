@@ -9,6 +9,7 @@ import com.daletguimel.bookcatalog.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,5 +72,18 @@ public class BookService {
 
     public List<AuthorEntity> getAuthorsAliveInYear(int year){
         return authorRepository.findAuthorsAliveInYear(year);
+    }
+
+    public DoubleSummaryStatistics getDownloadStatistics(){
+        return bookRepository.findAll().stream()
+                .mapToDouble(BookEntity::getDownloadCount)
+                .summaryStatistics();
+    }
+
+    public List<BookEntity> getTopTenByDownloads(){
+        return bookRepository.findAll().stream()
+                .sorted((b1, b2) -> Integer.compare(b2.getDownloadCount(), b1.getDownloadCount()))
+                .limit(10)
+                .collect(Collectors.toList());
     }
 }

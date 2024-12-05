@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,13 +33,16 @@ public class Main {
         var opcion = -1;
         while (opcion != 0) {
             var menu = """
+                    
                     1. Búsqueda por nombre de libro o autor
                     2. Búsqueda por fecha (entre el año de nacimiento y el año de fallecimiento)
                     3. Listar todos los libros consultados
                     4. Listar los libros consultados por idioma
                     5. Listar todos los autores consultados
                     6. Listar autores vivos en un año determinado
-                    7. Mostrar estadística de libros por idioma
+                    7. Mostrar conteo de libros por idioma
+                    8. Mostrar estadísticas de descargas
+                    9. Mostrar Top 10 de libros más descargados
                     
                     0. Salir
                     """;
@@ -55,6 +59,8 @@ public class Main {
                 case 5 -> listarTodosLosAutores();
                 case 6 -> listarAutoresVivos();
                 case 7 -> mostrarEstadisticasPorIdioma();
+                case 8 -> mostrarEstadisticasDeDescargas();
+                case 9 -> mostrarTopTenLibrosDescargados();
                 case 0 -> System.out.println("Saliendo. ¡Que tenga un buen día!");
                 default -> System.out.println("Opción no válida. Intente nuevamente, por favor");
             }
@@ -151,5 +157,20 @@ public class Main {
         System.out.println("Cantidad de libros por idioma: ");
         System.out.println("\nLibros en inglés (en): " + bookService.countBooksByLanguage("en"));
         System.out.println("\nLibros en español (es): " + bookService.countBooksByLanguage("es"));
+    }
+
+    private void mostrarEstadisticasDeDescargas(){
+        DoubleSummaryStatistics statistics = bookService.getDownloadStatistics();
+        System.out.println("Estadísticas de descargas: ");
+        System.out.println("\nTotal de descargas: " + statistics.getSum());
+        System.out.println("\nPromedio de descargas: " + statistics.getAverage());
+        System.out.println("\nCantidad máxima de descargas para un libro: " + statistics.getMax());
+        System.out.println("\nCantidad mínima de descargas para un libro: " + statistics.getMin());
+    }
+
+    private void mostrarTopTenLibrosDescargados(){
+        List<BookEntity> topTenBooks = bookService.getTopTenByDownloads();
+        System.out.println("Top 10 de libros más descargados: ");
+        topTenBooks.forEach(System.out::println);
     }
 }

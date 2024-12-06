@@ -114,7 +114,7 @@ Es muy sencillo de usar: solo sigue las opciones del menú para interactuar con 
 
 ## Licencia
 
-Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo LICENSE para más detalles.
+Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICENSE](LICENCE) para más detalles.
 
 ## Autor
 

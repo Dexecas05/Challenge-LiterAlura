@@ -1,36 +1,43 @@
-<h1>Book Catalog</h1>
+# Book Catalog
 
-<h2>Descripción del Proyecto</h2>
+## Descripción del Proyecto
+
 El Book Catalog es una aplicación basada en Java y Spring Framework que permite a los usuarios buscar, almacenar y gestionar información sobre libros y autores. Utiliza la API de Gutendex para recuperar información sobre libros y autores, y almacena los datos en una base de datos PostgreSQL.
 
-<h2>Funcionalidades</h2>
+## Funcionalidades
 
-Búsqueda
-Búsqueda por Nombre de Libro o Autor: Permite al usuario buscar libros por su título o el nombre del autor.
+### Búsqueda en la API
 
-Búsqueda por Fecha: Permite al usuario buscar libros publicados en un rango de años especificado.
+  - **Búsqueda por Nombre de Libro o Autor:** Permite al usuario buscar libros por su título o el nombre del autor (o un fragmento del título o del nombre) y devuelve la primera opción encontrada, que por defecto es la que mayor cantidad de descargas registradas posee.
 
-Listado
-Listar Todos los Libros: Muestra todos los libros almacenados en la base de datos.
+  - **Búsqueda por Fecha:** Permite al usuario buscar libros publicados en un rango de años especificado. Esta función devuelve todos los libros encontrados entre los años especificados.
 
-Listar Libros por Idioma: Permite al usuario listar libros según el idioma en que están escritos.
+### Listado
 
-Listar Todos los Autores: Muestra todos los autores almacenados en la base de datos.
+  - **Listar Todos los Libros:** Muestra todos los libros almacenados en la base de datos.
 
-Listar Autores Vivos en un Determinado Año: Permite al usuario listar autores que estaban vivos en un año específico.
+  - **Listar Libros por Idioma:** Permite al usuario listar libros según el idioma en que están escritos (Ej.: "es" para español, "en" para inglés, etc.).
 
-Estadísticas
-Estadísticas por Idioma: Muestra la cantidad de libros en un determinado idioma.
+  - **Listar Todos los Autores:** Muestra todos los autores almacenados en la base de datos (estos se registran al ejecutar las consultas en la API).
 
-Estadísticas de Descargas: Muestra estadísticas sobre las descargas de libros, incluyendo el total, el promedio, el máximo y el mínimo de descargas.
+  - **Listar Autores Vivos en un Determinado Año:** Permite al usuario listar autores que estaban vivos en un año específico.
 
-Top 10 Libros Más Descargados: Muestra los 10 libros más descargados almacenados en la base de datos.
+### Estadísticas
 
-API Utilizada
-La aplicación utiliza la API de Gutendex para recuperar información sobre los libros y autores. Esta API proporciona acceso a los libros disponibles en el Proyecto Gutenberg.
+  - **Estadísticas por Idioma:** Muestra la cantidad de libros registrados en la base de datos en un idioma especificado.
 
-Estructura del Proyecto
+  - **Estadísticas de Descargas:** Muestra estadísticas sobre las descargas de libros, incluyendo el total, el promedio, el máximo y el mínimo de descargas.
+
+  - **Top 10 Libros Más Descargados:** Muestra los diez (10) libros más descargados almacenados en la base de datos.
+
+## API Utilizada
+
+La aplicación utiliza la API de [Gutendex](https://gutendex.com/) para recuperar información sobre los libros y autores. Esta API proporciona acceso a la información sobre los libros disponibles en el [Proyecto Gutenberg](https://www.gutenberg.org/).
+
+## Estructura del Proyecto
+
 La estructura principal del proyecto es la siguiente:
+
 <pre>
 bookcatalog
 ├── src
@@ -64,43 +71,57 @@ bookcatalog
 ├── README.md
 </pre>
 
-Requisitos
-Java 17
+## Requisitos
+  - Java 17
 
-Spring Boot
+  - Spring Boot (con las dependencias añadidas de PostgreSQL Driver y Spring JPA)
 
-PostgreSQL
+  - PostgreSQL
 
-<pre></pre>
+## Configuración
 
-Configuración
-1. Clona el repositorio:
+  1. Clona el repositorio:
 
-<pre>sh
-git clone https://github.com/tu-usuario/book-catalog.git</pre>
+<pre>
+  sh
+git clone https://github.com/tu-usuario/book-catalog.git
+</pre>
 
-2. Configura la base de datos en el archivo application.properties:
+  2. Configura la base de datos en el archivo application.properties:
 
-<pre>properties
+<pre>
+  properties
 spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:postgresql://localhost/book_catalog
-spring.datasource.username=postgres
+spring.datasource.url=jdbc:postgresql://localhost/nombre_de_tu_database
+spring.datasource.username=tu_nombre_de_usuario
 spring.datasource.password=tu_contraseña
 spring.datasource.driver-class-name=org.postgresql.Driver
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 </pre>
 
-3. Ejecuta la aplicación:
+  3. Ejecuta la aplicación:
 
-<pre>sh
-./mvnw spring-boot:run</pre>
+<pre>
+  sh
+./mvnw spring-boot:run
+</pre>
 
-Uso
-Sigue las opciones del menú para interactuar con la aplicación y explorar las diversas funcionalidades.
+## Uso
 
-Contribución
-¡Contribuciones son bienvenidas! Siéntete libre de abrir un issue o un pull request.
+Es muy sencillo de usar: solo sigue las opciones del menú para interactuar con la aplicación y explorar las diversas funcionalidades.
 
-Licencia
+## Contribución
+
+¡Las contribuciones son bienvenidas! Siéntete libre de abrir un issue o un pull request.
+
+## Licencia
+
 Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo LICENSE para más detalles.
+
+## Autor
+
+  - Darío Exequiel Castillo
+  - LinkedIn: <www.linkedin.com/in/darío-castillo-b1463998>
+
+**Este proyecto fue desarrollado en el marco de participación del Programa ONE (Oracle Next Education), ofrecido por Alura Latam y Oracle. Puedes leer más en el siguiente enlace <https://www.oracle.com/ar/education/oracle-next-education/>*

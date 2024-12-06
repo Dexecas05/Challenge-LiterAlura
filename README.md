@@ -2,7 +2,7 @@
 
 ## Descripción del Proyecto
 
-El Book Catalog es una aplicación basada en Java y Spring Framework que permite a los usuarios buscar, almacenar y gestionar información sobre libros y autores. Utiliza la API de Gutendex para recuperar información sobre libros y autores, y almacena los datos en una base de datos PostgreSQL.
+El Book Catalog es una aplicación de consola basada en Java y Spring Framework que permite a los usuarios buscar, almacenar y gestionar información sobre libros y autores. Utiliza la API de Gutendex para recuperar información sobre libros y autores, y almacena los datos en una base de datos PostgreSQL.
 
 ## Funcionalidades
 
@@ -82,15 +82,13 @@ bookcatalog
 
   1. Clona el repositorio:
 
-<pre>
-  sh
+<pre>sh
 git clone https://github.com/tu-usuario/book-catalog.git
 </pre>
 
   2. Configura la base de datos en el archivo application.properties:
 
-<pre>
-  properties
+<pre>properties
 spring.jpa.hibernate.ddl-auto=update
 spring.datasource.url=jdbc:postgresql://localhost/nombre_de_tu_database
 spring.datasource.username=tu_nombre_de_usuario
@@ -102,8 +100,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
   3. Ejecuta la aplicación:
 
-<pre>
-  sh
+<pre>sh
 ./mvnw spring-boot:run
 </pre>
 
@@ -123,5 +120,7 @@ Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo LICENS
 
   - Darío Exequiel Castillo
   - LinkedIn: <www.linkedin.com/in/darío-castillo-b1463998>
+
+_ _ _
 
 **Este proyecto fue desarrollado en el marco de participación del Programa ONE (Oracle Next Education), ofrecido por Alura Latam y Oracle. Puedes leer más en el siguiente enlace <https://www.oracle.com/ar/education/oracle-next-education/>*

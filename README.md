@@ -1,8 +1,8 @@
-# Book Catalog
+# Book Catalogue
 
 ## Descripción del Proyecto
 
-El Book Catalog es una aplicación de consola basada en Java y Spring Framework que permite a los usuarios buscar, almacenar y gestionar información sobre libros y autores. Utiliza la API de Gutendex para recuperar información sobre libros y autores, y almacena los datos en una base de datos PostgreSQL.
+El Book Catalogue es una aplicación de consola basada en Java y Spring Framework que permite a los usuarios buscar, almacenar y gestionar información sobre libros y autores. Utiliza la API de Gutendex para recuperar información sobre libros y autores, y almacena los datos en una base de datos PostgreSQL.
 
 ![Menú de la aplicación](https://github.com/Dexecas05/Challenge-LiterAlura/blob/main/screenshot.png)
 
